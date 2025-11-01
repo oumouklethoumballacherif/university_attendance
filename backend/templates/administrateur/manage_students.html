@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Gestion des étudiants{% endblock %}
+
+{% block content %}
+<div class="bg-white p-6 rounded-2xl shadow-md mt-8">
+    <h2 class="text-3xl font-bold mb-6 text-indigo-700 flex items-center gap-2">🎓 Gestion des étudiants</h2>
+
+    <!-- Ajouter étudiant -->
+    <div class="flex justify-end mb-4">
+        <a href="{{ url_for('admin.add_student') }}" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
+            ➕ Ajouter un étudiant
+        </a>
+    </div>
+
+    <div class="overflow-x-auto">
+        <table class="min-w-full border border-gray-200 rounded-xl">
+            <thead class="bg-indigo-100 text-indigo-800">
+                <tr>
+                    <th class="py-3 px-4 text-left">Matricule</th>
+                    <th class="py-3 px-4 text-left">Nom</th>
+                    <th class="py-3 px-4 text-left">Prénom</th>
+                    <th class="py-3 px-4 text-left">Filière</th>
+                    <th class="py-3 px-4 text-left">Année</th>
+                    <th class="py-3 px-4 text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+                {% for student in students %}
+                <tr class="hover:bg-gray-50 transition">
+                    <td class="py-2 px-4">{{ student.matricule }}</td>
+                    <td class="py-2 px-4">{{ student.nom }}</td>
+                    <td class="py-2 px-4">{{ student.prenom }}</td>
+                    <td class="py-2 px-4">{{ student.filiere.nom_filiere }}</td>
+                    <td class="py-2 px-4">{{ student.annee }}ème</td>
+                    <td class="py-2 px-4 text-center">
+                        <a href="{{ url_for('admin.edit_student', id=student.id_etudiant) }}" class="text-blue-600 hover:underline mr-2">✏️ Modifier</a>
+                        <form action="{{ url_for('admin.delete_student', id=student.id_etudiant) }}" method="POST" class="inline-block">
+                            <button type="submit" class="text-red-600 hover:underline" onclick="return confirm('Voulez-vous vraiment supprimer cet étudiant ?');">🗑️ Supprimer</button>
+                        </form>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="6" class="text-center text-gray-500 py-4">Aucun étudiant trouvé.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

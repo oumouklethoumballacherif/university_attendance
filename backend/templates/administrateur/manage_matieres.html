@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Gestion des Matières{% endblock %}
+
+{% block content %}
+<div class="bg-white p-6 rounded-2xl shadow-md mt-8">
+    <h2 class="text-3xl font-bold mb-6 text-indigo-700">📚 Matières de la filière "{{ filiere.nom_filiere }}"</h2>
+
+    <div class="flex justify-end mb-4">
+        <a href="{{ url_for('admin.add_matiere', id_filiere=filiere.id_filiere) }}" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
+            ➕ Ajouter une matière
+        </a>
+    </div>
+
+    {% if matieres %}
+    <table class="min-w-full border-collapse border border-gray-200 rounded-lg overflow-hidden">
+        <thead class="bg-indigo-600 text-white">
+            <tr>
+                <th class="px-4 py-2 text-left">Nom de la matière</th>
+                <th class="px-4 py-2 text-left">Code</th>
+                <th class="px-4 py-2 text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for m in matieres %}
+            <tr class="hover:bg-gray-100 border-b">
+                <td class="px-4 py-2">{{ m.nom_matiere }}</td>
+                <td class="px-4 py-2">{{ m.code }}</td>
+                <td class="px-4 py-2 text-center space-x-2">
+                    <a href="{{ url_for('admin.edit_matiere', id_matiere=m.id_matiere) }}" class="text-blue-600 hover:underline">Modifier</a>
+                    <form action="{{ url_for('admin.delete_matiere', id_matiere=m.id_matiere) }}" method="POST" class="inline">
+                        <button type="submit" class="text-red-600 hover:underline" onclick="return confirm('Supprimer cette matière ?')">Supprimer</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p class="text-gray-500 mt-4">Aucune matière pour cette filière.</p>
+    {% endif %}
+</div>
+{% endblock %}

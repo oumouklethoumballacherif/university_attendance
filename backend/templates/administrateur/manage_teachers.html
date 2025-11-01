@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Gestion des enseignants{% endblock %}
+
+{% block content %}
+<div class="bg-white p-6 rounded-2xl shadow-md mt-8">
+    <h2 class="text-3xl font-bold mb-6 text-indigo-700">👩‍🏫 Gestion des enseignants</h2>
+
+    <!-- Bouton Ajouter -->
+    <div class="flex justify-end mb-4">
+        <a href="{{ url_for('admin.add_teacher') }}" 
+           class="px-5 py-2 bg-green-500 hover:bg-green-600 text-white font-medium rounded-lg shadow transition duration-200">
+            ➕ Ajouter un enseignant
+        </a>
+    </div>
+
+    <!-- Tableau -->
+    <div class="overflow-x-auto">
+        <table class="min-w-full bg-white border border-gray-200 rounded-lg shadow-sm">
+            <thead class="bg-gray-100 border-b">
+                <tr class="text-left text-gray-700 uppercase text-sm">
+                    <th class="px-6 py-3">Matricule</th>
+                    <th class="px-6 py-3">Nom</th>
+                    <th class="px-6 py-3">Prénom</th>
+                    <th class="px-6 py-3">Email</th>
+                    <th class="px-6 py-3 text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for teacher in teachers %}
+                <tr class="border-b hover:bg-gray-50 transition">
+                    <td class="px-6 py-3 font-medium text-gray-800">{{ teacher.matricule }}</td>
+                    <td class="px-6 py-3">{{ teacher.nom }}</td>
+                    <td class="px-6 py-3">{{ teacher.prenom }}</td>
+                    <td class="px-6 py-3 text-gray-600">{{ teacher.email }}</td>
+                    <td class="px-6 py-3 text-center space-x-2">
+                        <a href="{{ url_for('admin.edit_teacher', id=teacher.id_enseignant) }}" 
+                           class="text-blue-600 hover:text-blue-800 font-semibold">
+                            ✏️ Modifier
+                        </a>
+                        <form action="{{ url_for('admin.delete_teacher', id=teacher.id_enseignant) }}" 
+                              method="POST" 
+                              class="inline">
+                            <button type="submit" 
+                                    class="text-red-600 hover:text-red-800 font-semibold"
+                                    onclick="return confirm('Supprimer cet enseignant ?')">
+                                🗑️ Supprimer
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="5" class="px-6 py-4 text-center text-gray-500">
+                        Aucun enseignant trouvé.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}Modifier un enseignant{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto bg-white p-8 rounded-2xl shadow-md mt-10">
+    <h2 class="text-2xl font-bold mb-6 text-indigo-700">✏️ Modifier un enseignant</h2>
+
+    <form method="POST" action="{{ url_for('admin.edit_teacher', id=teacher.id_enseignant) }}">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+                <label class="block text-gray-700 font-semibold mb-2">Matricule</label>
+                <input type="text" name="matricule" value="{{ teacher.matricule }}" required
+                       class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring focus:ring-indigo-200 focus:outline-none">
+            </div>
+
+            <div>
+                <label class="block text-gray-700 font-semibold mb-2">Nom</label>
+                <input type="text" name="nom" value="{{ teacher.nom }}" required
+                       class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring focus:ring-indigo-200 focus:outline-none">
+            </div>
+
+            <div>
+                <label class="block text-gray-700 font-semibold mb-2">Prénom</label>
+                <input type="text" name="prenom" value="{{ teacher.prenom }}" required
+                       class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring focus:ring-indigo-200 focus:outline-none">
+            </div>
+
+            <div>
+                <label class="block text-gray-700 font-semibold mb-2">Email</label>
+                <input type="email" name="email" value="{{ teacher.email }}"
+                       class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring focus:ring-indigo-200 focus:outline-none">
+            </div>
+
+            <div>
+                <label class="block text-gray-700 font-semibold mb-2">Nouveau mot de passe (optionnel)</label>
+                <input type="password" name="mot_de_passe"
+                       placeholder="Laisser vide pour ne pas changer"
+                       class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring focus:ring-indigo-200 focus:outline-none">
+            </div>
+
+            <div>
+                <label class="block text-gray-700 font-semibold mb-2">Département</label>
+                <select name="id_departement" required  class="w-full border border-gray-300 p-2 rounded-lg focus:ring-2 focus:ring-indigo-500">
+    <option value="">-- Sélectionnez --</option>
+    {% for dep in departements %}
+    <option value="{{ dep.id_departement }}"
+        {% if teacher and teacher.id_departement == dep.id_departement %}selected{% endif %}>
+        {{ dep.nom_departement }}
+    </option>
+    {% endfor %}
+</select>
+            </div>
+        </div>
+
+        <div class="flex justify-between mt-8">
+            <a href="{{ url_for('admin.manage_teachers') }}" class="text-gray-600 hover:underline">← Retour</a>
+            <button type="submit"
+                    class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition">
+                Mettre à jour
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}

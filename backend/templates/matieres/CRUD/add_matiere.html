@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Ajouter une Matière{% endblock %}
+
+{% block content %}
+<div class="max-w-xl mx-auto bg-white p-8 rounded-2xl shadow-md mt-10">
+    <h2 class="text-2xl font-bold mb-6 text-indigo-700">➕ Ajouter une matière</h2>
+
+    <form method="POST" action="{{ url_for('admin.add_matiere', id_filiere=filiere.id_filiere) }}">
+        <div class="mb-4">
+            <label class="block text-gray-700 font-semibold mb-2">Nom de la matière</label>
+            <input type="text" name="nom_matiere" required class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring focus:ring-indigo-200 focus:outline-none" placeholder="Ex : Mathématiques">
+        </div>
+
+        <div class="mb-4">
+            <label class="block text-gray-700 font-semibold mb-2">Code de la matière</label>
+            <input type="text" name="code" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring focus:ring-indigo-200 focus:outline-none" placeholder="Ex : MAT101">
+        </div>
+
+        <div class="flex justify-between mt-6">
+            <a href="{{ url_for('admin.manage_matieres_by_filiere', id_filiere=filiere.id_filiere) }}" class="text-gray-600 hover:underline">← Retour</a>
+            <button type="submit" class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition">Enregistrer</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

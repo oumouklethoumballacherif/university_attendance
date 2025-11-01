@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Modifier une Matière{% endblock %}
+
+{% block content %}
+<div class="max-w-xl mx-auto bg-white p-8 rounded-2xl shadow-md mt-10">
+    <h2 class="text-2xl font-bold mb-6 text-indigo-700">✏️ Modifier une matière</h2>
+
+    <form method="POST" action="{{ url_for('admin.edit_matiere', id_matiere=matiere.id_matiere) }}">
+        <div class="mb-4">
+            <label class="block text-gray-700 font-semibold mb-2">Nom de la matière</label>
+            <input type="text" name="nom_matiere" required value="{{ matiere.nom_matiere }}" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring focus:ring-indigo-200 focus:outline-none">
+        </div>
+
+        <div class="mb-4">
+            <label class="block text-gray-700 font-semibold mb-2">Code de la matière</label>
+            <input type="text" name="code" value="{{ matiere.code }}" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring focus:ring-indigo-200 focus:outline-none">
+        </div>
+
+        <div class="flex justify-between mt-6">
+            <a href="{{ url_for('admin.manage_matieres_by_filiere', id_filiere=matiere.id_filiere) }}" class="text-gray-600 hover:underline">← Retour</a>
+            <button type="submit" class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition">Mettre à jour</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

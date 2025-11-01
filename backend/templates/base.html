@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %} UIR – Système de présence{% endblock %}</title>
+
+    <!-- TailwindCSS depuis CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        /* Couleurs inspirées de l’Université Internationale de Rabat */
+        :root {
+            --uir-blue: #002D62;
+            --uir-light: #E5E5E5;
+            --uir-dark: #4E4E4E;
+            --uir-yellow: #D0D700;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 flex flex-col min-h-screen">
+    
+    <!-- Navbar -->
+    <nav class="bg-[var(--uir-blue)] text-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            
+            <!-- Logo + Titre -->
+            <div class="flex items-center space-x-3">
+                <img src="{{ url_for('static', filename='images/uir_logo.jpg') }}" alt="UIR Logo" class="h-10 w-auto">
+                <div class="text-[var(--uir-yellow)] text-xl font-extralight tracking-tight font-sans">
+                    the innovative University
+                </div>
+            </div>
+
+            <!-- Menu -->
+            <div class="flex space-x-6 text-lg">
+                {% if current_user.is_authenticated %}
+                    <!-- Lien Accueil selon rôle -->
+                    {% if current_user.role == 'admin' %}
+                        <a href="{{ url_for('admin.dashboard') }}" class="hover:text-gray-200">Accueil</a>
+                    {% elif current_user.role == 'teacher' %}
+                        <a href="{{ url_for('teacher.dashboard') }}" class="hover:text-gray-200">Accueil</a>
+                    {% elif current_user.role == 'student' %}
+                        <a href="{{ url_for('student.dashboard') }}" class="hover:text-gray-200">Accueil</a>
+                    {% endif %}
+
+                    <!-- Déconnexion -->
+                    <a href="/login" class="hover:text-gray-200">Déconnexion</a>
+                {% else %}
+                    <a href="/login" class="hover:text-gray-200">Connexion</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenu -->
+    <main class="flex-grow max-w-7xl mx-auto px-6 py-6">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-[var(--uir-dark)] text-white text-center py-4 mt-10">
+        <p class="text-sm">
+            © 2025 – Université Internationale de Rabat | Système de gestion des présences
+        </p>
+    </footer>
+
+</body>
+</html>

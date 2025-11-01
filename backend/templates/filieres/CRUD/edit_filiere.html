@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Modifier une filière{% endblock %}
+
+{% block content %}
+<div class="max-w-xl mx-auto bg-white p-8 rounded-2xl shadow-md mt-10">
+    <h2 class="text-2xl font-bold mb-6 text-indigo-700">✏️ Modifier la filière</h2>
+
+    <form method="POST" action="{{ url_for('admin.edit_filiere', id=filiere.id_filiere) }}">
+        <div class="mb-4">
+            <label class="block text-gray-700 font-semibold mb-2">Nom de la filière</label>
+            <input type="text" name="nom_filiere" value="{{ filiere.nom_filiere }}" required class="w-full border border-gray-300 rounded-lg px-4 py-2">
+        </div>
+
+        <div class="flex justify-between mt-6">
+            <a href="{{ url_for('admin.manage_filieres_by_departement', id_departement=filiere.id_departement) }}" class="text-gray-600 hover:underline">← Retour</a>
+            <button type="submit" class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700">Mettre à jour</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
